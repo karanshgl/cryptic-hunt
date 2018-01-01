@@ -4,6 +4,8 @@ from django.db import models
 
 class Level(models.Model):
 	""" A model representing a single level """
+	DEFAULT_LEVEL = 1
+	
 	level_id = models.AutoField(primary_key=True) 
 	title = models.CharField(max_length=100)
 	question = models.CharField(max_length=255)
