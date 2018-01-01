@@ -1,4 +1,4 @@
-from djangi import forms
+from django import forms
 
 # Import models
 
