@@ -1,16 +1,16 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import UserModel
+from .models import Profile
 
-class UserAdminModel(admin.ModelAdmin):
+class ProfileAdminModel(admin.ModelAdmin):
 	""" Admin Model """
 
-	list_display = ["user", "current_level", "is_banned"]
+	list_display = ["user" ,"current_level", "is_banned", "institute"]
 
 	search_fields = ["user", "user.email"]
 
 	class Meta:
-		model = UserModel
+		model = Profile
 
-admin.site.register(UserModel, UserAdminModel)
+admin.site.register(Profile, ProfileAdminModel)
