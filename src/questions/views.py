@@ -6,6 +6,8 @@ from .forms import LevelForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.shortcuts import redirect
+from django.utils import timezone
+
 
 
 
@@ -61,6 +63,7 @@ class Hunt(LoginRequiredMixin, View):
 				level_number = cur_user.profile.current_level.level_id
 				try:
 					cur_user.profile.current_level = Level.objects.get(level_id = level_number + 1)
+					cur_user.profile.current_level_time = timezone.now
 					cur_user.profile.save()
 				except:
 					pass

@@ -14,12 +14,15 @@ class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	institute = models.CharField(max_length=255, null=True)
 	current_level = models.ForeignKey(Level, default = Level.DEFAULT_LEVEL)
-	current_level_time = models.DateTimeField(auto_now=True)
+	current_level_time = models.DateTimeField(default=timezone.now)
 	is_banned = models.BooleanField(default = False)
 	is_admin = models.BooleanField(default = False)
 
 	def __str__(self):
 		return self.user.username
+
+	def get_level(self):
+		return self.current_level.level_id
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):

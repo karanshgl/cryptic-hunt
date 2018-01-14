@@ -1,5 +1,26 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h2>Standings</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Rank</th>
+        <th>Username</th>
+        <th>Level</th>
+      </tr>
+    </thead>
 {% for user in queryset %}
 
-{{user.username}} <br>
+    <tbody>
+      <tr>
+        <td>{{i}}</td>
+        <td>{{user.username}}</td>
+        <td>{{user.profile.get_level}}</td>
+      </tr>
+  </tbody>
 
 {%endfor%}
+  </table>
+
+{% endblock %}
