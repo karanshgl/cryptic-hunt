@@ -59,11 +59,12 @@ class Hunt(LoginRequiredMixin, View):
 		if form.is_valid():
 			print(request.user.username)
 			ans = form.cleaned_data.get('answer')
+			print(cur_level.answer)
 			if ans == cur_level.answer:
 				level_number = cur_user.profile.current_level.level_id
 				try:
 					cur_user.profile.current_level = Level.objects.get(level_id = level_number + 1)
-					cur_user.profile.current_level_time = timezone.now
+					#cur_user.profile.current_level_time = timezone.now
 					cur_user.profile.save()
 				except:
 					pass
