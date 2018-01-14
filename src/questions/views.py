@@ -5,6 +5,7 @@ from .models import Level
 from .forms import LevelForm
 from django.views import View
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.shortcuts import redirect
 
 
 
@@ -50,8 +51,14 @@ class Hunt(LoginRequiredMixin, View):
 
 	def post(self,request, *args, **kwargs):
 		cur_user = User.objects.get(id=request.user.id)
+		cur_level = cur_user.profile.current_level
 		form = self.form_class(request.POST)
 		if form.is_valid():
 			print(request.user.username)
-			return render(request, 'home.html')
-		return render(request,'home.html')
+			ans = form.cleaned_data.get('answer')
+			if ans == cur_level.answer:
+				l=cur_user.profile.current_level.level_id
+				cur_user.profile.current_level = Level.objects.get(level_id=l+1)
+				cur_user.profile.save()
+			return redirect('/hunt/')
+		return redirect('/hunt/')
