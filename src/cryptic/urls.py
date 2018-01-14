@@ -22,12 +22,13 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 
+
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
     url(r'^register/$',register),
     url(r'^leaderboard/$',leaderboard),
     url(r'^hunt/$',Hunt.as_view(), name='hunt'),
-    url(r'^login/$', auth_views.login, {'template_name': 'login.html'}, name='login'),
+    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True), {'template_name': 'login.html'}, name='login'),
     url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
 
 ]
