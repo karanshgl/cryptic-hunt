@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
-from accounts.views import register, leaderboard
+from accounts.views import register, leaderboard, home
 from questions.views import Hunt
 from django.contrib.auth import views as auth_views
 from django.conf import settings
@@ -28,8 +28,12 @@ urlpatterns = [
     url(r'^register/$',register),
     url(r'^leaderboard/$',leaderboard),
     url(r'^hunt/$',Hunt.as_view(), name='hunt'),
-    url(r'^login/$', auth_views.LoginView.as_view(redirect_authenticated_user=True), {'template_name': 'login.html'}, name='login'),
-    url(r'^logout/$', auth_views.logout, {'template_name': 'logout.html'}, name='logout'),
+    url(r'^login/$', auth_views.LoginView.as_view(
+        redirect_authenticated_user=True, template_name = 'login.html'),
+        name='login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(template_name = 'logout.html'),
+        name='logout'),
+    url(r'^$',home),
 
 ]
 

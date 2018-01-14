@@ -38,3 +38,7 @@ def leaderboard(request):
 		'queryset' : queryset,
 	}
 	return render(request, 'leaderboard.html', context)
+
+
+def home(request):
+	return render(request, 'home.html')
