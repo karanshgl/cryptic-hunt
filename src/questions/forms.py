@@ -4,9 +4,5 @@ from django import forms
 
 from .models import Level
 
-class LevelForm(forms.ModelForm):
-	class Meta:
-		model = Level
-		fields = [
-			"answer"
-		]
+class LevelForm(forms.Form):
+	answer = forms.CharField(label="Answer")
