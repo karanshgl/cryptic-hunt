@@ -9,6 +9,7 @@ from django.shortcuts import redirect
 
 
 
+
 # Create your views here.
 """
 @login_required
@@ -57,8 +58,13 @@ class Hunt(LoginRequiredMixin, View):
 			print(request.user.username)
 			ans = form.cleaned_data.get('answer')
 			if ans == cur_level.answer:
-				l=cur_user.profile.current_level.level_id
-				cur_user.profile.current_level = Level.objects.get(level_id=l+1)
-				cur_user.profile.save()
+				level_number = cur_user.profile.current_level.level_id
+				try:
+					cur_user.profile.current_level = Level.objects.get(level_id = level_number + 1)
+					cur_user.profile.save()
+				except:
+					pass
+
+				
 			return redirect('/hunt/')
 		return redirect('/hunt/')

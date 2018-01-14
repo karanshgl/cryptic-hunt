@@ -1,6 +1,8 @@
 <html>
 <body>
+	{% if level.image.url is not None %}
 	<img src={{level.image.url}}>
+	{% endif %}
 	<form method="POST" action=""> {% csrf_token %}
 
 	{{form.as_p}}

@@ -14,7 +14,7 @@ class Profile(models.Model):
 	user = models.OneToOneField(User, on_delete = models.CASCADE)
 	institute = models.CharField(max_length=255, null=True)
 	current_level = models.ForeignKey(Level, default = Level.DEFAULT_LEVEL)
-	current_level_time = models.DateTimeField(default = timezone.now)
+	current_level_time = models.DateTimeField(auto_now=True)
 	is_banned = models.BooleanField(default = False)
 	is_admin = models.BooleanField(default = False)
 
