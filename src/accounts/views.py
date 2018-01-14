@@ -3,6 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
+from django.contrib import messages
 
 # Create your views here.
 
@@ -22,7 +23,12 @@ def register(request):
 			user = authenticate(username=user.username, password=raw_password)
 			login(request, user)
 			return render(request,'home.html')
-			
+		else:
+			context = {
+				'form' : form,
+			}
+			return render(request,'register.html', context)
+
 	form = SignUpForm()
 	context = {
 		'form' : form,
