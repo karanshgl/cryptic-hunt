@@ -9,30 +9,12 @@ from django.shortcuts import redirect
 from django.utils import timezone
 
 
-
-
-
-# Create your views here.
-"""
-@login_required
-def hunt(request):
-	cur_user = User.objects.get(id=request.user.id)
-	if cur_user.profile.is_banned:
-		# ban page
-		return render(request,home.html)
-	cur_level = cur_user.profile.current_level
-	answer = LevelForm(request.POST or None)
-	context = {
-		'level' : cur_level,
-		'form' : answer, 
-	}
-	"""
-
+from django.urls import reverse
 
 class Hunt(LoginRequiredMixin, View):
 	""" The Game """
 	login_url = '/login/'
-	redirect_field_name = 'home.html'
+	redirect_field_name = '/hunt/'
 
 
 	form_class = LevelForm
@@ -57,9 +39,7 @@ class Hunt(LoginRequiredMixin, View):
 		cur_level = cur_user.profile.current_level
 		form = self.form_class(request.POST)
 		if form.is_valid():
-			print(request.user.username)
 			ans = form.cleaned_data.get('answer')
-			print(cur_level.answer)
 			if ans == cur_level.answer:
 				level_number = cur_user.profile.current_level.level_id
 				try:
@@ -69,6 +49,4 @@ class Hunt(LoginRequiredMixin, View):
 				except:
 					pass
 
-				
-			return redirect('/hunt/')
-		return redirect('/hunt/')
+		return redirect(reverse('hunt'))

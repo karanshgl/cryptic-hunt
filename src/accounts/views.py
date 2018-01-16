@@ -3,7 +3,7 @@ from django.contrib.auth import login, authenticate
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 
-from django.contrib import messages
+from django.urls import reverse
 
 # Create your views here.
 
@@ -17,12 +17,11 @@ def register(request):
 			user = form.save()
 			user.refresh_from_db()  # load the profile instance created by the signal
 			user.profile.institute = form.cleaned_data.get('institute')
-			print(user.profile.institute)
 			user.save()
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_password)
 			login(request, user)
-			return redirect('/hunt/')
+			return redirect(reverse('hunt'))
 		else:
 			context = {
 				'form' : form,
@@ -39,7 +38,6 @@ def register(request):
 
 def leaderboard(request):
 	queryset = User.objects.order_by('-profile__current_level','profile__current_level_time')
-	print(queryset)
 	context = {
 		'queryset' : queryset,
 	}
@@ -48,3 +46,6 @@ def leaderboard(request):
 
 def home(request):
 	return render(request, 'home.html')
+
+def rules(request):
+	return render(request, 'rules.html')
