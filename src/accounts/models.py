@@ -24,6 +24,9 @@ class Profile(models.Model):
 	def get_level(self):
 		return self.current_level.level_id
 
+	def get_name(self):
+		return self.user.first_name + " " + self.user.last_name
+
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
     if created:

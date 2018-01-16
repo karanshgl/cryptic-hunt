@@ -22,7 +22,7 @@ def register(request):
 			raw_password = form.cleaned_data.get('password1')
 			user = authenticate(username=user.username, password=raw_password)
 			login(request, user)
-			return render(request,'home.html')
+			return redirect('/hunt/')
 		else:
 			context = {
 				'form' : form,
