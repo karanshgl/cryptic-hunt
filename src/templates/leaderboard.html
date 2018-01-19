@@ -16,7 +16,7 @@
     <tbody>
       <tr>
         <td>{{forloop.counter}}</td>
-        <td>{{user.username}}</td>
+        <td data-toggle="tooltip" title="{{user.profile.get_name}}"><span>{{user.username}}</span></td>
         <td>{{user.profile.get_level}}</td>
       </tr>
   </tbody>
@@ -25,6 +25,11 @@
   </table>
 </div>
 
+<script>
+$(document).ready(function(){
+    $('[data-toggle="tooltip"]').tooltip();   
+});
+</script>
 
 
 {% endblock %}
