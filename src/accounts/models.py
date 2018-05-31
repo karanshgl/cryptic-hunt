@@ -22,13 +22,22 @@ class Profile(models.Model):
 		return self.user.username
 
 	def get_level(self):
+		"""
+		Returns the current level of the user
+		"""
 		return self.current_level.level_id
 
 	def get_name(self):
+		"""
+		Returns the name of the user
+		"""
 		return self.user.first_name + " " + self.user.last_name
 
 @receiver(post_save, sender=User)
 def update_user_profile(sender, instance, created, **kwargs):
-    if created:
-        Profile.objects.create(user=instance)
-    instance.profile.save()
+	"""
+	Creates a user profile just after a user is created
+	"""
+	if created:
+		Profile.objects.create(user=instance)
+	instance.profile.save()

@@ -16,11 +16,16 @@ class Hunt(LoginRequiredMixin, View):
 	login_url = '/login/'
 	redirect_field_name = '/hunt/'
 
-
+	# Form field for the level
 	form_class = LevelForm
 
 
 	def get(self, request, *args, **kwargs):
+		""" 
+		GET Request 
+		1. get the current user by the request.user
+		2. find their current level and return the question accordingly
+		"""
 		cur_user = User.objects.get(id=request.user.id)
 		if cur_user.profile.is_banned:
 			return render(request,'home.html')
@@ -35,6 +40,11 @@ class Hunt(LoginRequiredMixin, View):
 
 
 	def post(self,request, *args, **kwargs):
+		"""
+		POST request
+		1. Get the current user and their answer
+		2. If the answer is correct, update the level
+		"""
 		cur_user = User.objects.get(id=request.user.id)
 		cur_level = cur_user.profile.current_level
 		form = self.form_class(request.POST)

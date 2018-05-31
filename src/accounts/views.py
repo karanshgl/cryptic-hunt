@@ -10,10 +10,17 @@ from django.urls import reverse
 from .forms import SignUpForm
 
 def register(request):
-	
+	"""
+	Register View, creates new users
+	"""
 	if request.method == 'POST':
+		""" A new form is submitted """
+
+		# Get the form
 		form = SignUpForm(request.POST)
 		if form.is_valid():
+			# If form is validated
+			# Save the user, refresh the database, save the user profile
 			user = form.save()
 			user.refresh_from_db()  # load the profile instance created by the signal
 			user.profile.institute = form.cleaned_data.get('institute')
@@ -28,6 +35,7 @@ def register(request):
 			}
 			return render(request,'register.html', context)
 
+	# Else return an empty form
 	form = SignUpForm()
 	context = {
 		'form' : form,
@@ -37,6 +45,9 @@ def register(request):
 
 
 def leaderboard(request):
+	"""
+	Returns the leadboard, sorted first with level (desc) then time (asc)
+	"""
 	queryset = User.objects.order_by('-profile__current_level','profile__current_level_time')
 	context = {
 		'queryset' : queryset,

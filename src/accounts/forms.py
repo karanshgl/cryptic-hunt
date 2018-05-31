@@ -7,6 +7,10 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Profile
 
 class SignUpForm(UserCreationForm):
+	"""
+	A sign up form for a new user
+	"""
+	# Insitute Name
 	institute = forms.CharField(max_length=255)
 
 	def __init__(self, *args, **kwargs):
@@ -17,6 +21,7 @@ class SignUpForm(UserCreationForm):
 
 	class Meta:
 		model = User
+		# The fields shown in the form
 		fields = ('first_name', 'last_name', 'username', 'email', 'password1', 'password2', 'institute' )
 
 	def clean_email(self):
